@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 228
           source: "."
-          target: "/root/web-ci"
+          target: "/root/web-app"
 
       - name: Deploy container on controller
         uses: appleboy/ssh-action@v0.1.10
@@ -32,7 +32,7 @@ jobs:
           script: |
             set -e
             cd /root/web-ci
-            docker build -t web-ci .
-            docker rm -f web-ci || true
-            docker run -d --name web-ci -p 8000:8000 web-ci
+            docker build -t web-app .
+            docker rm -f web-app || true
+            docker run -d --name web-app -p 8080:8000 web-app
 
