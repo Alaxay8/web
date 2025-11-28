@@ -1,4 +1,4 @@
-name: Deploy to server
+name: Deploy to controller
 
 on:
   push:
@@ -9,27 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Copy files to server
+      - name: Copy project to controller
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "."
-          target: "/root/web-app"
+          target: "/root/web-ci"
 
-      - name: SSH deploy
+      - name: Deploy container on controller
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /root/web-app
-            docker build -t web-app .
-            docker rm -f web-app || true
-            docker run -d --name web-app -p 8000:8000 web-app
+            set -e
+            cd /root/web-ci
+            docker build -t web-ci .
+            docker rm -f web-ci || true
+            docker run -d --name web-ci -p 8000:8000 web-ci
 
