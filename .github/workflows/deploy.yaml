@@ -1,3 +1,17 @@
+name: Deploy to controller
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Copy project to controller
         uses: appleboy/scp-action@v0.1.7
         with:
