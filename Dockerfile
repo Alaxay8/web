@@ -7,5 +7,5 @@ RUN pip install --no-cache-dir flask
 
 COPY index.py .
 
-CMD ["python3", "-u", "index.py"]
+CMD ["python3", "-u", "app.py"]
 
