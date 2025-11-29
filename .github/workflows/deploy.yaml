@@ -9,30 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # checkout можно оставить, но ssh-action он не нужен,
+      # пусть будет на будущее
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Copy project to controller
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 228
-          source: "."
-          target: "/root/web-app"
 
       - name: Deploy container on controller
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 228
+          key: ${{ secrets.SSH_KEY }}   # в Secrets должен быть SSH_KEY с ПРИВАТНЫМ ключом
+          port: 228                     # твой нестандартный ssh-порт
           script: |
             set -e
             cd /root/web-app
+            git pull
             docker build -t web-app .
             docker rm -f web-app || true
             docker run -d --name web-app -p 8080:8000 web-app
-
