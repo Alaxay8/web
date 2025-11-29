@@ -5,7 +5,7 @@ WORKDIR /app
 # Устанавливаем Flask
 RUN pip install --no-cache-dir flask
 
-COPY index.py .
+COPY app.py .
 
 CMD ["python3", "-u", "app.py"]
 
