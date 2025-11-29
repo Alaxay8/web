@@ -2,13 +2,161 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Flask App</title>
+    <title>Alex DevOps Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Подключаем CSS из static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Hello, from Python!</h1>
-    <p>I'm Alex.</p>
-    <p>Good morning!</p>
-    <h3>Today is a good day</h3>
-    <p>blablabla</p>
+<div class="page">
+
+    <header>
+        <div class="logo">
+            <div class="logo-mark">
+                <div class="logo-inner">AX</div>
+            </div>
+            <div class="logo-text">
+                <span>alex devops lab</span>
+                <span>Hands-on Cloud & Automation</span>
+            </div>
+        </div>
+        <div class="tag">Made with Flask · localhost:8000</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Hello, I'm <span>Alex</span>.</h1>
+                <p>
+                    I break things in safe environments, automate the fix,
+                    and turn chaos into reliable systems. This is my tiny
+                    DevOps playground, served to you by a Python Flask app.
+                </p>
+
+                <div class="hero-badges">
+                    <div class="pill"><strong>Focus:</strong> DevOps · Cloud · Automation</div>
+                    <div class="pill"><strong>Tools:</strong> Linux · Docker · Kubernetes · CI/CD</div>
+                </div>
+
+                <div class="hero-buttons">
+                    <div class="btn btn-primary">
+                        <span class="icon">▶</span>
+                        <span>Run demo pipeline (imaginary)</span>
+                    </div>
+                    <div class="btn btn-ghost">
+                        <span class="dot"></span>
+                        <span>Monitoring: all systems nominal</span>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="hero-terminal" aria-label="demo terminal">
+                <div class="term-header">
+                    <div class="term-dots">
+                        <div class="term-dot red"></div>
+                        <div class="term-dot yellow"></div>
+                        <div class="term-dot green"></div>
+                    </div>
+                    <div class="term-title">controller:~ / web-app</div>
+                </div>
+                <div class="term-body">
+                    <span class="term-line term-comment"># quick health check</span>
+                    <span class="term-line">
+                        <span class="term-prompt">alex@controller</span>:~$ docker ps --format "{{"{{.Names}}  {{.Status}}"}}"
+                    </span>
+                    <span class="term-line">web-app       Up 3 minutes</span>
+                    <span class="term-line">prometheus    Up 1 hour</span>
+                    <span class="term-line">grafana       Up 1 hour</span>
+                    <br>
+                    <span class="term-line term-comment"># deploy new image</span>
+                    <span class="term-line">
+                        <span class="term-prompt">alex@controller</span>:~/web-app$ git pull && docker build -t web-app .
+                    </span>
+                    <span class="term-line">✨ build complete in 4.2s</span>
+                    <br>
+                    <span class="term-line term-comment"># sanity check</span>
+                    <span class="term-line">
+                        <span class="term-prompt">alex@controller</span>:~/web-app$ curl -s localhost:8000 | head -n 1
+                    </span>
+                    <span class="term-line term-key">&lt;h1&gt;Hello, from Python!&lt;/h1&gt;</span>
+                    <br>
+                    <span class="term-line term-warn">
+                        ✔ deployment status: green · latency: 12ms · errors: 0
+                    </span>
+                    <span class="term-line blink">
+                        <span class="term-prompt">alex@controller</span>:~/web-app$
+                    </span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>current focus</h2>
+                <span>what i'm actively sharpening</span>
+            </div>
+            <div class="cards">
+                <article class="card">
+                    <div class="card-title">Kubernetes & GitOps</div>
+                    <div class="card-sub">Multi-node clusters, Argo CD, declarative everything.</div>
+                    <div class="chip-row">
+                        <span class="chip accent">k8s</span>
+                        <span class="chip">Argo CD</span>
+                        <span class="chip">Helm</span>
+                        <span class="chip">MetalLB · Ingress</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>Goal: production-grade clusters</span>
+                        <span>status: in progress ⏳</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-title">CI/CD & Automation</div>
+                    <div class="card-sub">From push to running container with zero manual steps.</div>
+                    <div class="chip-row">
+                        <span class="chip accent">GitHub Actions</span>
+                        <span class="chip">GitLab CI</span>
+                        <span class="chip">Docker</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>Goal: one-command deploys</span>
+                        <span>status: getting there 🚀</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-title">Linux & Observability</div>
+                    <div class="card-sub">Knowing what the system feels before it screams.</div>
+                    <div class="chip-row">
+                        <span class="chip accent">Linux</span>
+                        <span class="chip">Prometheus</span>
+                        <span class="chip">Grafana</span>
+                        <span class="chip">Logs & traces</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>Goal: zero blind spots</span>
+                        <span>status: always learning 📡</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="stack-strip">
+            <span class="label">toolchain</span>
+            <span class="stack-item"><strong>Python</strong> · Flask</span>
+            <span class="stack-item"><strong>Docker</strong> · Compose</span>
+            <span class="stack-item"><strong>Linux</strong> · Ubuntu</span>
+            <span class="stack-item"><strong>Git</strong> · GitHub</span>
+            <span class="stack-item"><strong>DevOps mindset</strong>: ship · learn · improve</span>
+        </section>
+    </main>
+
+    <footer>
+        <span>Served by <span class="highlight">Flask</span> inside a Docker container on <span class="highlight">controller</span>.</span>
+        <span>Next step: expose this app via Ingress in a Kubernetes cluster.</span>
+    </footer>
+
+</div>
 </body>
 </html>
