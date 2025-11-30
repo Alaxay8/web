@@ -17,10 +17,10 @@
             </div>
             <div class="logo-text">
                 <span>alex devops lab</span>
-                <span>Практика облаков и автоматизации</span>
+                <span>Личный Flask-полигон для Docker и CI/CD</span>
             </div>
         </div>
-        <div class="tag">Сделано на Flask · localhost:8000</div>
+        <div class="tag">Flask · Docker image · GitHub Actions</div>
     </header>
 
     <main>
@@ -28,24 +28,25 @@
             <div class="hero-text">
                 <h1>Привет, я <span>Алексей</span>.</h1>
                 <p>
-                    Я намеренно ломаю вещи в безопасных средах, автоматизирую починку
-                    и превращаю хаос в предсказуемые системы. Это мой маленький
-                    DevOps-полигон, который сейчас отдаётся вам Python-приложением на Flask.
+                    Это мой учебный проект на Flask. Я использую его как DevOps-полигон:
+                    собираю Docker-образы, настраиваю пайплайны CI/CD и обкатываю
+                    идеи по автоматизации деплоя. Здесь всё создано для практики —
+                    от локального контейнера до прогонов в GitHub Actions.
                 </p>
 
                 <div class="hero-badges">
-                    <div class="pill"><strong>Фокус:</strong> DevOps · Облака · Автоматизация</div>
-                    <div class="pill"><strong>Инструменты:</strong> Linux · Docker · Kubernetes · CI/CD</div>
+                    <div class="pill"><strong>Цель:</strong> от git push до работающего контейнера</div>
+                    <div class="pill"><strong>Стек:</strong> Python · Flask · Docker · GitHub Actions</div>
                 </div>
 
                 <div class="hero-buttons">
                     <div class="btn btn-primary">
                         <span class="icon">▶</span>
-                        <span>Запустить демо-пайплайн (воображение)</span>
+                        <span>Собрать Docker-образ (через CI/CD)</span>
                     </div>
                     <div class="btn btn-ghost">
                         <span class="dot"></span>
-                        <span>Мониторинг: всё зелёное, ошибок нет</span>
+                        <span>Статус пайплайна: зелёный, без падений</span>
                     </div>
                 </div>
             </div>
@@ -60,28 +61,27 @@
                     <div class="term-title">controller:~ / web-app</div>
                 </div>
                 <div class="term-body">
-                    <span class="term-line term-comment"># быстрый health check</span>
+                    <span class="term-line term-comment"># локальная проверка Docker-сборки</span>
                     <span class="term-line">
-                        <span class="term-prompt">alex@controller</span>:~$ docker ps --format "{{"{{.Names}}  {{.Status}}"}}"
+                        <span class="term-prompt">alex@controller</span>:~/web-app$ docker build -t alex/flask-lab .
                     </span>
-                    <span class="term-line">web-app       Up 3 minutes</span>
-                    <span class="term-line">prometheus    Up 1 hour</span>
-                    <span class="term-line">grafana       Up 1 hour</span>
+                    <span class="term-line">✓ образ alex/flask-lab успешно собран</span>
                     <br>
-                    <span class="term-line term-comment"># деплой новой версии образа</span>
+                    <span class="term-line term-comment"># прогонится теми же командами в GitHub Actions</span>
                     <span class="term-line">
-                        <span class="term-prompt">alex@controller</span>:~/web-app$ git pull && docker build -t web-app .
+                        <span class="term-prompt">alex@controller</span>:~/web-app$ git push origin main
                     </span>
-                    <span class="term-line">✨ сборка завершена за 4.2s</span>
+                    <span class="term-line">🚀 workflow build-and-test запущен</span>
+                    <span class="term-line">✓ тесты пройдены · образ опубликован в registry</span>
                     <br>
-                    <span class="term-line term-comment"># sanity check приложения</span>
+                    <span class="term-line term-comment"># sanity check сервиса</span>
                     <span class="term-line">
                         <span class="term-prompt">alex@controller</span>:~/web-app$ curl -s localhost:8000 | head -n 1
                     </span>
-                    <span class="term-line term-key">&lt;h1&gt;Привет из Python!&lt;/h1&gt;</span>
+                    <span class="term-line term-key">&lt;h1&gt;Flask DevOps Lab работает&lt;/h1&gt;</span>
                     <br>
                     <span class="term-line term-warn">
-                        ✔ статус деплоя: green · задержка: 12ms · ошибок: 0
+                        ✔ деплой: ok · latency: 12ms · ошибок по логам: 0
                     </span>
                     <span class="term-line blink">
                         <span class="term-prompt">alex@controller</span>:~/web-app$
@@ -92,51 +92,58 @@
 
         <section class="section">
             <div class="section-header">
-                <h2>текущий фокус</h2>
-                <span>над чем сейчас прокачиваюсь</span>
+                <h2>что я здесь тренирую</h2>
+                <span>проект как стенд для DevOps-экспериментов</span>
             </div>
             <div class="cards">
                 <article class="card">
-                    <div class="card-title">Kubernetes и GitOps</div>
-                    <div class="card-sub">Мульти-ноды, Argo CD и полностью декларативный подход.</div>
+                    <div class="card-title">Сборка Docker-образов</div>
+                    <div class="card-sub">
+                        Оптимальный Dockerfile для Flask: лёгкий образ, корректный
+                        рабочий каталог, зависимости и health-check.
+                    </div>
                     <div class="chip-row">
-                        <span class="chip accent">k8s</span>
-                        <span class="chip">Argo CD</span>
-                        <span class="chip">Helm</span>
-                        <span class="chip">MetalLB · Ingress</span>
+                        <span class="chip accent">Dockerfile</span>
+                        <span class="chip">python:3.12-slim</span>
+                        <span class="chip">многоступенчатые сборки</span>
                     </div>
                     <div class="card-footer">
-                        <span>Цель: кластеры уровня продакшн</span>
-                        <span>статус: в процессе ⏳</span>
+                        <span>Цель: быстрые и предсказуемые сборки</span>
+                        <span>статус: используется каждый коммит</span>
                     </div>
                 </article>
 
                 <article class="card">
-                    <div class="card-title">CI/CD и автоматизация</div>
-                    <div class="card-sub">От git push до работающего контейнера без ручных действий.</div>
+                    <div class="card-title">CI/CD через GitHub Actions</div>
+                    <div class="card-sub">
+                        Пайплайн, который на каждом push собирает образ, прогоняет
+                        тесты и при необходимости разворачивает контейнер.
+                    </div>
                     <div class="chip-row">
-                        <span class="chip accent">GitHub Actions</span>
-                        <span class="chip">GitLab CI</span>
-                        <span class="chip">Docker</span>
+                        <span class="chip accent">build-and-test</span>
+                        <span class="chip">docker build</span>
+                        <span class="chip">pytest (по желанию)</span>
                     </div>
                     <div class="card-footer">
-                        <span>Цель: деплой в один шаг</span>
-                        <span>статус: почти готово 🚀</span>
+                        <span>Цель: максимум автоматизации</span>
+                        <span>статус: пайплайн живёт и развивается</span>
                     </div>
                 </article>
 
                 <article class="card">
-                    <div class="card-title">Linux и наблюдаемость</div>
-                    <div class="card-sub">Понимать состояние системы до того, как всё упадёт.</div>
+                    <div class="card-title">Flask как учебный бэкенд</div>
+                    <div class="card-sub">
+                        Минимальное приложение, которого достаточно, чтобы тренировать
+                        DevOps-циклы: логи, статика, шаблоны и health-check.
+                    </div>
                     <div class="chip-row">
-                        <span class="chip accent">Linux</span>
-                        <span class="chip">Prometheus</span>
-                        <span class="chip">Grafana</span>
-                        <span class="chip">Логи и трейсы</span>
+                        <span class="chip accent">Flask</span>
+                        <span class="chip">Jinja2</span>
+                        <span class="chip">static + templates</span>
                     </div>
                     <div class="card-footer">
-                        <span>Цель: никаких слепых зон</span>
-                        <span>статус: постоянно учусь 📡</span>
+                        <span>Цель: простой, но показательный сервис</span>
+                        <span>статус: готов к экспериментам</span>
                     </div>
                 </article>
             </div>
@@ -145,16 +152,16 @@
         <section class="stack-strip">
             <span class="label">стек</span>
             <span class="stack-item"><strong>Python</strong> · Flask</span>
-            <span class="stack-item"><strong>Docker</strong> · Compose</span>
-            <span class="stack-item"><strong>Linux</strong> · Ubuntu</span>
-            <span class="stack-item"><strong>Git</strong> · GitHub</span>
-            <span class="stack-item"><strong>DevOps-мышление</strong>: ship · learn · improve</span>
+            <span class="stack-item"><strong>Docker</strong> · Docker Hub / registry</span>
+            <span class="stack-item"><strong>CI/CD</strong> · GitHub Actions</span>
+            <span class="stack-item"><strong>Linux</strong> · Ubuntu · контейнеры</span>
+            <span class="stack-item"><strong>DevOps-подход</strong>: маленький сервис · жёсткий pipeline</span>
         </section>
     </main>
 
     <footer>
-        <span>Отдаётся через <span class="highlight">Flask</span> внутри Docker-контейнера на хосте <span class="highlight">controller</span>.</span>
-        <span>Следующий шаг: вывести это приложение в свет через Ingress в Kubernetes-кластере.</span>
+        <span>Проект разворачивается через <span class="highlight">Docker-образ</span>, собранный из этого репозитория.</span>
+        <span>Следующий шаг: подключить Kubernetes и выкатить приложение через Ingress.</span>
     </footer>
 
 </div>
