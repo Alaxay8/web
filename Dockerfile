@@ -10,4 +10,4 @@ COPY templates ./templates
 COPY static ./static
 
 CMD ["python3", "-u", "app.py"]
-
+HEALTHCHECK CMD curl -f http://localhost:8080/health || exit 1
