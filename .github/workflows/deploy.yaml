@@ -1,16 +1,64 @@
-name: Deploy to controller
+name: CI/CD
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build test image
+        run: docker build -t web-app:test .
+
+      - name: Run container
+        run: |
+          docker run -d --rm --name web-app-test -p 8000:8000 web-app:test
+          sleep 5
+
+      - name: Check HTTP response
+        run: |
+          curl --fail --max-time 10 http://localhost:8000 || (echo "App is not responding" && exit 1)
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker logs web-app-test || true
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push image
+        run: |
+          IMAGE="ghcr.io/${{ github.repository_owner }}/web-app:${{ github.sha }}"
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
+
   deploy:
+    # деплой только при пуше в main, но не при pull_request
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Deploy container on controller
+      - name: Deploy on controller
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -19,8 +67,10 @@ jobs:
           port: 228
           script: |
             set -e
-            cd /root/web-app
-            git pull
-            docker build -t web-app .
+            IMAGE="ghcr.io/${{ github.repository_owner }}/web-app:${{ github.sha }}"
+
+            docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+
+            docker pull "$IMAGE"
             docker rm -f web-app || true
-            docker run -d --name web-app -p 8080:8000 web-app
+            docker run -d --name web-app -p 8080:8000 "$IMAGE"
