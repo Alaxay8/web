@@ -8,6 +8,10 @@ app=Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route("/banned")
+def banned():
+    return render_template("banned.html)
+
 @app.route("/health")
 def health():
     return "OK", 200
