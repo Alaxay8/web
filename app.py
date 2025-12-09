@@ -10,7 +10,7 @@ def index():
 
 @app.route("/banned")
 def banned():
-    return render_template("banned.html)
+    return render_template("banned.html")
 
 @app.route("/health")
 def health():
